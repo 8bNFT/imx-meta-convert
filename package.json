@@ -1,0 +1,14 @@
+{
+  "name": "imx-meta-convert",
+  "version": "1.0.0",
+  "main": "index.js",
+  "scripts": {
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "fast-glob": "^3.2.7"
+  },
+  "devDependencies": {},
+  "description": ""
+}
