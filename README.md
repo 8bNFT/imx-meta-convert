@@ -4,9 +4,13 @@ No formatting here, I know, shocker, especially since this definitely WASN'T scr
 Also, I did follow best Node.js practices, which means I used a module that could've been avoided and it has brought a dozen other dependencies, because why the fuck not.
 
 Is this code efficient - most likely not.
+
 Does it look pretty - it's in the eyes of the beholder.
+
 Are there gonna be bugs - ???.
+
 Redundancy - yessir.
+
 Hotel - **Trivago!**
 
 Configuration:
@@ -28,6 +32,7 @@ Configuration:
     --allow-multi (default: false) - parses multi-token metadata files
     
     --separate-multi (default: true) - separates multi-token metadata (1 file per token)
+
 
 Example call:
 
