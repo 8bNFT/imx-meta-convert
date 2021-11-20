@@ -33,7 +33,7 @@ Configuration:
 
     --allow-multi (default: false) - parses multi-token metadata files
     
-    --separate-multi (default: true) - separates multi-token metadata (1 file per token)
+    --separate-multi (default: false) - separates multi-token metadata (1 file per token)
 
 
 Example call:
