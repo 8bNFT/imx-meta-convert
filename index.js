@@ -26,7 +26,8 @@ const CONFIG = {
     allow_extra: false,
     debug: false,
     multi: false,
-    merge_multi: true
+    merge_multi: true,
+    remove_extension: false
 }
 
 // PARSING ARGUMENTS FOR CONFIG CHANGES
@@ -56,6 +57,10 @@ for(let arg of ARGS){
             }
             case '--separate-multi':{
                 CONFIG.merge_multi = false       
+                break;
+            }
+            case '--no-extension':{
+                CONFIG.remove_extension = true       
                 break;
             }
         }
@@ -169,19 +174,25 @@ function flattenJSON({data}){
     return FLAT
 }
 
-function convert({name, path, index, length}){
+function convert({name: _name, path, index, length}){
     let json = parseJSON({path})
     if(!json){
         return console.error(`[FILE:PARSE] ${!isNaN(index) ? ('[' + index + (!isNaN(length) ? '/' + length : '')) + '] ' : ''}Error parsing file: ${path}`)
     }
+
+    let name = CONFIG.remove_extension ? _name.split('.')[0] : _name
+
     if(Array.isArray(json)){
         if(!CONFIG.multi) return console.error(`[FILE:PARSE] ${!isNaN(index) ? ('[' + index + (!isNaN(length) ? '/' + length : '')) + '] ' : ''}Multi-token metadata file not allowed: ${path}. Run with flag --allow-multi to parse multi-token metadata.`)
         const merged = []
         for(let [i, token] of json.entries()){
             let flattened = flattenJSON({data: token})
             if(!CONFIG.merge_multi){
-                fs.writeFileSync(`${CONFIG.output}/${name}_${i+1}`, JSON.stringify(flattened, null, 4))
-                console.log(`[FILE:CONVERTED] ${!isNaN(index) ? ('[' + index + (!isNaN(length) ? '/' + length : '')) + '/#' + (i + 1) + '] ' : ''}${path} to ${CONFIG.output}/${name}_${i+1}`)
+                let s_name = _name.split('.')
+                let name = `${s_name.shift()}_${i+1}`
+                if(!CONFIG.remove_extension && s_name.length) name += `.${s_name.join('.')}`
+                fs.writeFileSync(`${CONFIG.output}/${name}`, JSON.stringify(flattened, null, 4))
+                console.log(`[FILE:CONVERTED] ${!isNaN(index) ? ('[' + index + (!isNaN(length) ? '/' + length : '')) + '/#' + (i + 1) + '] ' : ''}${path} to ${CONFIG.output}/${name}`)
             } else {
                 merged.push(flattened)
             }

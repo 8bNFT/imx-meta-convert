@@ -23,6 +23,8 @@ Configuration:
     
     --debug (default: false) - shows JSON parsing error, yup that's it
 
+    --no-extension (default: false) - removes *any* file extensions, best used when hosting on IPFS (eg. "123.json" becomes "123")
+
     --allow-object (default: false) - enables top-level objects, otherwise they get skipped (properties object still gets flattened)
 
     --allow-array (default: false) - allow-object but for arrays only, crazy, I know (attributes still get flattened)
